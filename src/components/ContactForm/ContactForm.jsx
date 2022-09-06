@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import css from './ContactForm.module.css';
 import { useDispatch, useSelector } from "react-redux";
-import { addContact } from '../../redux/contacts/contacts-actions';
 import Notiflix from 'notiflix';
 import { postContact } from '../../redux/contacts/contacts-operations'
-import { nanoid } from 'nanoid';
+import { RotatingLines } from 'react-loader-spinner';
 
 export const ContactForm = () => {
   const [name, setName] = useState('')
   const [number, setNumber] = useState('')
   const dispatch = useDispatch();
   const items = useSelector(state => state.contacts.items)
+  const status = useSelector(state => state.contacts.status);
 
   const handleChangeInput = event => {
     if (event.target.name === 'name') {
@@ -72,7 +72,15 @@ export const ContactForm = () => {
           />
         </label>
 
-        <button type="submit" className={css.btn}>add contact</button>
+        <button type="submit" className={css.btn}>add contact  {status === 'add' && (<div className={css.Loader}>
+          <RotatingLines
+            strokeColor="white"
+            strokeWidth="5"
+            animationDuration="0.75"
+            width="20"
+            visible={true}
+          />
+        </div>)} </button>
       </form>
     </div>
   );

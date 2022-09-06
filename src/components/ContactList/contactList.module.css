@@ -1,0 +1,9 @@
+.contactList {
+  width: 100%;
+  box-sizing: border-box;
+}
+.Loader {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}

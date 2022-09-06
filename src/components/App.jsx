@@ -3,18 +3,19 @@ import { ContactForm } from 'components/ContactForm/ContactForm';
 import { Filter } from 'components/Filter/Filter';
 import { ContactList } from 'components/ContactList/ContactList';
 import { useSelector, useDispatch } from "react-redux";
-import {fetchContacts} from '../redux/contacts/contacts-operations'
+import { fetchContacts } from '../redux/contacts/contacts-operations'
+import { RotatingLines } from 'react-loader-spinner';
 import css from './App.module.css';
-// const LS_KEY = 'reader_contacts';
 
 export const App = () => {
-  // const items = useSelector(state => state.contacts.items);
   const dispatch = useDispatch();
+  const status = useSelector(state => state.contacts.status);
 
   useEffect(() => {
-    // window.localStorage.setItem(LS_KEY, JSON.stringify(items))
     dispatch(fetchContacts())
   }, [dispatch])
+
+
 
   return (
     <div className={css.appContainer}>
@@ -23,8 +24,16 @@ export const App = () => {
 
       <h2 className={css.title}>Contacts</h2>
       <Filter />
-      <ContactList
-      />
+      {status === 'fetch' && (<div className={css.Loader}>
+        <RotatingLines
+          strokeColor="white"
+          strokeWidth="5"
+          animationDuration="0.75"
+          width="150"
+          visible={true}
+        />
+      </div>)}
+      <ContactList />
     </div>
   );
 }
